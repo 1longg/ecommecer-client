@@ -2,7 +2,7 @@ import HttpStatusCode from "@/constants/statusCode";
 import {  authResponse } from "@/types/respone";
 import { getNewAccessToken } from "@/utils/api";
 import { clearLocalStorage, getAccessTokenFormLocalStorage, setAccessTokenToLocalStorage, setRefreshTokenToLocalStorage, setUserIdToLocalStorage } from "@/utils/auth";
-import axios, { AxiosError, AxiosInstance } from "axios";
+import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 const axiosApiInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL + "/v1",
@@ -34,25 +34,33 @@ class ApiService {
           setAccessTokenToLocalStorage(this.accessToken)
           setRefreshTokenToLocalStorage(data.metadata?.refreshToken)
           setUserIdToLocalStorage(data.metadata.user._id)
-        } else if (url === '/auths/logOut') {
+        } 
+        else if (url === '/auths/logOut' && response.status === HttpStatusCode.Ok) {
           this.accessToken = ''
           clearLocalStorage()
         }
         return response
       },
       function (error: AxiosError) {
+        const originalConfig = error.config as InternalAxiosRequestConfig
         if(error.response?.status === HttpStatusCode.Unauthorized){
-           (async () => {
+          (async () => {
             try{
               const newAccessToken = await getNewAccessToken()
               setAccessTokenToLocalStorage(newAccessToken)
-              return newAccessToken
+              originalConfig.headers['Authorization'] = `Bearer ${newAccessToken}`
+              try {
+                await axiosApiInstance.request(originalConfig as InternalAxiosRequestConfig)
+              } catch (error) {
+                return Promise.reject(error)
+              }
             }
             catch (error){
               clearLocalStorage()
               Promise.reject(error)
             }
-           }) 
+          })()
+
         }
         return Promise.reject(error)
       }

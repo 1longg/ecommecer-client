@@ -7,7 +7,8 @@ export function getAccessTokenFormLocalStorage() {
 export function getRefreshTokenFormLocalStorage() {
   if (typeof window === "undefined") return "";
   else {
-    return localStorage.getItem("refreshToken") || "";
+    const token = localStorage.getItem("refreshToken") as string;
+    return JSON.parse(token);
   }
 }
 export function setAccessTokenToLocalStorage(accessToken: string) {

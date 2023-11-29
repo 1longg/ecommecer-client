@@ -14,7 +14,9 @@
     "@tanstack/react-query": "^5.8.4",
     "@tanstack/react-query-devtools": "^5.8.4",
     "@tanstack/react-query-next-experimental": "^5.8.4",
+    "@types/uuid": "^9.0.7",
     "axios": "^1.6.1",
+    "clsx": "^2.0.0",
     "framer-motion": "^10.16.5",
     "geist": "^1.1.0",
     "joi": "^17.11.0",
@@ -23,7 +25,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
-    "react-hot-toast": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.201",

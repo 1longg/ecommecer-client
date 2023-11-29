@@ -41,3 +41,4 @@ export const validateSignUp = Joi.object({
     .label("Confirm password")
     .messages({ "any.only": "{{#label}} does not match" }),
 });
+

@@ -1,9 +1,9 @@
 import React from "react";
 import "./globals.css";
 import { AppWrapper } from "@/utils/context";
-import Providers from "@/utils/provider";
 import { Toaster } from "react-hot-toast";
 import { GeistSans } from "geist/font/sans";
+import TanstackQueryProvider from "./tanstackQueryProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -18,10 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={GeistSans.className}>
       <body>
-        <Providers>
+        <TanstackQueryProvider>
           <AppWrapper>{children}</AppWrapper>
           <Toaster position="top-right" />
-        </Providers>
+        </TanstackQueryProvider>
       </body>
     </html>
   );

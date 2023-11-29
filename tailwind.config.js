@@ -13,7 +13,19 @@ module.exports = {
       colors: {
         primaryColor: "#fafafa",
       },
+      keyframes: {
+        moveRtf: {
+          "0%": { transform: "translateX(0)" },
+          "25%": { transform: "translateX(-25%)" },
+          "50%": { transform: "translateX(-50%)" },
+          "75%": { transform: "translateX(-25%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        moveRtf: "moveRtf 20s linear infinite",
+      },
+      plugins: [],
     },
   },
-  plugins: [],
 };
